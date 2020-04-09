@@ -6,9 +6,9 @@ import (
 )
 
 type Product struct{
-	Number uint8 `json:"number"`
-	Price uint8 `json:"price"`
-	Vends uint8 `json:"vends"`
+	Number string `json:"number"`
+	Price string `json:"price"`
+	Vends string `json:"vends"`
 }
 type Event struct {
 	Type string `json:"type"`
@@ -43,5 +43,12 @@ func IsHeader(header string,headers []string)(isPresent bool){
 			break
 		}
 	}
+	return
+}
+func ParseProduct(line string) (product Product){
+	var productDetails = strings.Split(line, "*")
+	product.Number = productDetails[2]
+	product.Price = productDetails[3]
+	product.Vends = productDetails[5]
 	return
 }

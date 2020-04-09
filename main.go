@@ -9,6 +9,7 @@ func checkError(err error,msg string){
 	}
 }
  func main(){
+ 	var products []Product;
  	var headers = []string{"DXS","ST","G85","SE","DXE"}
  	fileID,err := os.Open("./source/ddcmp.txt")
  	checkError(err,"(Main) Opening File")
@@ -18,7 +19,13 @@ func checkError(err error,msg string){
  		line,byteCount:=StreamLine(*fileID, index)
  		dataElement := GetFirstDataElement(line)
 		if IsHeader(dataElement,headers)!=true{
-			fmt.Println(line)
+			if dataElement == "LA1"{
+				products = append(products,ParseProduct(line))
+				fmt.Println(products)
+			}
+			if dataElement == "EA1" {
+				fmt.Println(line)
+			}
 		}
  		index += byteCount
 	}
