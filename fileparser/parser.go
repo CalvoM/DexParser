@@ -1,6 +1,7 @@
-package main
+package fileparser
 
 import (
+	"fmt"
 	"os"
 	"strings"
 )
@@ -38,13 +39,13 @@ func StreamLine(fileID os.File, index int) (string, int) {
 }
 
 //GetFirstDataElement get fields from line
-func GetFirstDataElement(line string) string {
-	dataElement := strings.Split(line, "*")[0]
+func GetFirstDataElement(line, delimiter string) string {
+	dataElement := strings.Split(line, delimiter)[0]
 	return dataElement
 }
 
-//IsHeader :check if header is restricted
-func IsHeader(header string, headers []string) (isPresent bool) {
+//IsHeaderPresent :check if header is restricted
+func IsHeaderPresent(header string, headers []string) (isPresent bool) {
 	isPresent = false
 	for _, h := range headers {
 		if h == header {
@@ -62,4 +63,10 @@ func ParseProduct(line string) (product Product) {
 	product.Price = productDetails[3]
 	product.Vends = productDetails[5]
 	return
+}
+
+func checkError(err error, msg string) {
+	if err != nil {
+		fmt.Println(msg)
+	}
 }
